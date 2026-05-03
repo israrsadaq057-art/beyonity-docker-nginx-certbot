@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Beyonity Artist Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-card {
+            background: rgba(22,27,34,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 48px 40px;
+            width: 450px;
+            border: 1px solid rgba(126,231,135,0.2);
+        }
+        h1 {
+            font-size: 32px;
+            background: linear-gradient(135deg, #fff, #7ee787);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .subtitle { text-align: center; color: #8b949e; margin-bottom: 32px; }
+        select, button {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: white;
+        }
+        button {
+            background: #7ee787;
+            color: #0a0c10;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .stats { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid #30363d; }
+        .stat-number { font-size: 20px; font-weight: bold; color: #7ee787; }
+        .stat-label { font-size: 11px; color: #8b949e; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Beyonity</h1>
+        <div class="subtitle">Artist Asset Management</div>
+        <form method="POST" action="/login">
+            <select name="artist" required>
+                <option value="">Select your name</option>
+                {% for artist in artists %}
+                <option value="{{ artist }}">{{ artist | capitalize }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Access Portal</button>
+        </form>
+        <div class="stats">
+            <div><div class="stat-number">16</div><div class="stat-label">Artists</div></div>
+            <div><div class="stat-number">24/7</div><div class="stat-label">Access</div></div>
+            <div><div class="stat-number">Secure</div><div class="stat-label">Encrypted</div></div>
+        </div>
+    </div>
+</body>
+</html>
