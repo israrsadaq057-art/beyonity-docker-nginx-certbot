@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyonity Docker Nginx Certbot - Architecture Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Consolas', monospace;
+            background: #0a0c10;
+            color: #e6edf3;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #7ee787;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            margin-top: 8px;
+        }
+
+        .diagram {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .flow-node {
+            flex: 1;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .flow-arrow {
+            font-size: 28px;
+            color: #58a6ff;
+        }
+
+        .node-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #7ee787;
+            margin-bottom: 8px;
+        }
+
+        .node-desc {
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .node-port {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #58a6ff;
+            font-family: monospace;
+        }
+
+        .docker-box {
+            background: #1f2a3e;
+            border: 2px solid #58a6ff;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .docker-title {
+            text-align: center;
+            color: #58a6ff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .containers {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .container-card {
+            flex: 1;
+            background: #0d1117;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #30363d;
+        }
+
+        .container-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #7ee787;
+            margin-bottom: 8px;
+        }
+
+        .container-image {
+            font-size: 11px;
+            color: #8b949e;
+            margin-bottom: 8px;
+        }
+
+        .container-port {
+            font-size: 11px;
+            color: #58a6ff;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .table th {
+            color: #7ee787;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #30363d;
+            font-size: 12px;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Beyonity Docker + Nginx + Certbot</h1>
+        <div class="subtitle">Containerized Artist Portal Architecture</div>
+        <div class="subtitle">IT Administrator: Israr Sadaq | CCNA | CCNP</div>
+    </div>
+
+    <!-- Main Flow -->
+    <div class="diagram">
+        <div class="flow-row">
+            <div class="flow-node">
+                <div class="node-title">🌐 User Browser</div>
+                <div class="node-desc">Artist accesses portal</div>
+                <div class="node-port">HTTP/HTTPS</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+                <div class="node-title">🔒 Nginx</div>
+                <div class="node-desc">Reverse Proxy / SSL</div>
+                <div class="node-port">Port 80 / 443</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+                <div class="node-title">🐍 Flask</div>
+                <div class="node-desc">Web Application</div>
+                <div class="node-port">Port 5000</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+                <div class="node-title">☁️ AWS S3</div>
+                <div class="node-desc">Artist File Storage</div>
+                <div class="node-port">API</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Docker Compose Section -->
+    <div class="docker-box">
+        <div class="docker-title">📦 Docker Compose Multi-Container Orchestration</div>
+        <div class="containers">
+            <div class="container-card">
+                <div class="container-name">🐍 flask</div>
+                <div class="container-image">artist-portal_flask:latest</div>
+                <div class="container-port">Internal: 5000</div>
+                <div class="node-desc" style="margin-top: 8px;">Python Flask app<br>Login, upload, download, delete</div>
+            </div>
+            <div class="container-card">
+                <div class="container-name">🌐 nginx</div>
+                <div class="container-image">nginx:alpine</div>
+                <div class="container-port">Host: 80, 443 → Container: 80</div>
+                <div class="node-desc" style="margin-top: 8px;">Reverse proxy<br>SSL termination</div>
+            </div>
+            <div class="container-card">
+                <div class="container-name">🔐 certbot</div>
+                <div class="container-image">certbot/certbot</div>
+                <div class="container-port">None</div>
+                <div class="node-desc" style="margin-top: 8px;">SSL automation<br>Auto-renew certificates</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Table -->
+    <div class="diagram">
+        <div class="node-title" style="margin-bottom: 15px;">📋 Docker Compose Services</div>
+        <table class="table">
+            <thead>
+                <tr><th>Service</th><th>Container Name</th><th>Image</th><th>Ports</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>flask</td><td>beyonity-flask</td><td>artist-portal_flask</td><td>5000</td><td>Web application</td></tr>
+                <tr><td>nginx</td><td>beyonity-nginx</td><td>nginx:alpine</td><td>80, 443</td><td>Reverse proxy</td></tr>
+                <tr><td>certbot</td><td>beyonity-certbot</td><td>certbot/certbot</td><td>-</td><td>SSL automation</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Container Communication -->
+    <div class="diagram">
+        <div class="node-title" style="margin-bottom: 15px;">🔗 Container Communication</div>
+        <div class="flow-row">
+            <div class="flow-node" style="flex: 0.8;">
+                <div class="node-title">nginx</div>
+                <div class="node-desc">proxy_pass http://flask:5000</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node" style="flex: 0.8;">
+                <div class="node-title">flask</div>
+                <div class="node-desc">boto3.client('s3')</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node" style="flex: 0.8;">
+                <div class="node-title">AWS S3</div>
+                <div class="node-desc">https://s3.amazonaws.com</div>
+            </div>
+        </div>
+        <div class="node-desc" style="text-align: center; margin-top: 15px;">Docker network: app-network (bridge) - containers discover each other by name</div>
+    </div>
+
+    <!-- Verification Commands -->
+    <div class="diagram">
+        <div class="node-title" style="margin-bottom: 15px;">🖥️ Verification Commands</div>
+        <pre style="background: #0a0c10; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 12px;">
+# List running containers
+docker ps
+
+# Show Docker Compose services
+docker-compose ps
+
+# View Flask logs
+docker logs beyonity-flask --tail=20
+
+# Test Nginx to Flask routing
+curl http://localhost
+
+# Check container resource usage
+docker stats --no-stream
+        </pre>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Beyonity Docker Nginx Certbot | Israr Sadaq | CCNA | CCNP</p>
+        <p>GitHub: https://github.com/israrsadaq057-art/beyonity-docker-nginx-certbot</p>
+    </div>
+</div>
+</body>
+</html>
